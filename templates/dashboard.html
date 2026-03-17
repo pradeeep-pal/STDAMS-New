@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>STDAMS Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>STDAMS - Satellite Threat Detection & Monitoring</h1>
+        <div class="dashboard">
+            <div class="telemetry-panel">
+                <h2>Live Telemetry</h2>
+                <ul id="telemetry-list">
+                    <li>Temperature: <span id="temp"></span> °C</li>
+                    <li>Battery: <span id="battery"></span> %</li>
+                    <li>Signal: <span id="signal"></span> %</li>
+                    <li>CPU Load: <span id="cpu"></span> %</li>
+                </ul>
+            </div>
+            <div class="risk-panel">
+                <h2>Risk Score</h2>
+                <div id="risk-indicator" class="risk-low">Low</div>
+            </div>
+        </div>
+        <div class="charts">
+            <canvas id="telemetryChart"></canvas>
+            <canvas id="threatPie"></canvas>
+        </div>
+        <div class="alerts-panel">
+            <h2>Alerts</h2>
+            <ul id="alerts-list"></ul>
+        </div>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>

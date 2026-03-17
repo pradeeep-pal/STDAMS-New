@@ -1,0 +1,108 @@
+body {
+    background: #181c23;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 1100px;
+    margin: 30px auto;
+    background: #23272f;
+    border-radius: 12px;
+    box-shadow: 0 0 24px #0ff2, 0 0 2px #0ff2;
+    padding: 32px 40px;
+}
+h1 {
+    text-align: center;
+    color: #00ffe7;
+    margin-bottom: 24px;
+    letter-spacing: 2px;
+}
+.dashboard {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+.telemetry-panel, .risk-panel {
+    background: #22262e;
+    border-radius: 8px;
+    padding: 18px 28px;
+    box-shadow: 0 0 8px #0ff2;
+    width: 48%;
+}
+.telemetry-panel h2, .risk-panel h2 {
+    color: #00ffe7;
+    margin-top: 0;
+}
+#telemetry-list {
+    list-style: none;
+    padding: 0;
+    font-size: 1.1em;
+}
+#telemetry-list li {
+    margin-bottom: 8px;
+}
+.risk-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#risk-indicator {
+    font-size: 2.2em;
+    font-weight: bold;
+    margin-top: 12px;
+    padding: 12px 32px;
+    border-radius: 8px;
+    box-shadow: 0 0 12px #0ff2;
+    transition: background 0.3s, color 0.3s;
+}
+.risk-low {
+    background: #1e3a2a;
+    color: #00ff99;
+}
+.risk-medium {
+    background: #3a2e1e;
+    color: #ffe600;
+}
+.risk-high {
+    background: #3a1e1e;
+    color: #ff3c00;
+}
+.charts {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+.charts canvas {
+    background: #23272f;
+    border-radius: 8px;
+    box-shadow: 0 0 8px #0ff2;
+    margin: 0 10px;
+    width: 48% !important;
+    height: 320px !important;
+}
+.alerts-panel {
+    background: #22262e;
+    border-radius: 8px;
+    padding: 18px 28px;
+    box-shadow: 0 0 8px #0ff2;
+}
+.alerts-panel h2 {
+    color: #00ffe7;
+    margin-top: 0;
+}
+#alerts-list {
+    list-style: none;
+    padding: 0;
+}
+.alert-low {
+    color: #00ff99;
+}
+.alert-medium {
+    color: #ffe600;
+}
+.alert-high {
+    color: #ff3c00;
+}
