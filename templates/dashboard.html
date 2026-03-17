@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>STDAMS - Satellite Threat Detection & Monitoring</h1>
+        <h1>STDAMS - Satellite Threat Detection & Monitoring System </h1>
         <div class="dashboard">
             <div class="telemetry-panel">
                 <h2>Live Telemetry</h2>
@@ -25,8 +25,15 @@
             </div>
         </div>
         <div class="charts">
-            <canvas id="telemetryChart"></canvas>
-            <canvas id="threatPie"></canvas>
+            <div class="chart-block">
+                <canvas id="telemetryChart"></canvas>
+            </div>
+            <div class="chart-block">
+                <canvas id="threatPie"></canvas>
+            </div>
+            <div class="chart-block">
+                <canvas id="riskGauge"></canvas>
+            </div>
         </div>
         <div class="alerts-panel">
             <h2>Alerts</h2>

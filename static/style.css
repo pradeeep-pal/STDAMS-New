@@ -106,3 +106,68 @@ h1 {
 .alert-high {
     color: #ff3c00;
 }
+
+/* Modern cyber dashboard extras */
+.container {
+    border: 2px solid #00ffe7;
+    box-shadow: 0 0 32px #00ffe7, 0 0 2px #0ff2;
+}
+.dashboard, .charts, .alerts-panel {
+    backdrop-filter: blur(2px);
+}
+.telemetry-panel, .risk-panel, .alerts-panel {
+    border: 1px solid #00ffe722;
+}
+.chart-block {
+    border: 1px solid #00ffe722;
+}
+.alerts-panel {
+    margin-top: 18px;
+}
+
+.charts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 32px;
+}
+.chart-block {
+    flex: 1 1 300px;
+    min-width: 280px;
+    max-width: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #23272f;
+    border-radius: 12px;
+    box-shadow: 0 0 12px #0ff2, 0 0 2px #0ff2;
+    padding: 18px 8px 8px 8px;
+    margin: 0 0 0 0;
+}
+.chart-block canvas {
+    width: 100% !important;
+    height: 260px !important;
+    background: transparent;
+}
+
+/* Gauge chart tweaks */
+#riskGauge {
+    margin-top: 12px;
+    margin-bottom: 8px;
+    background: transparent;
+}
+
+@media (max-width: 900px) {
+    .dashboard, .charts {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .telemetry-panel, .risk-panel, .chart-block {
+        width: 100% !important;
+        margin-bottom: 18px;
+    }
+    .chart-block canvas {
+        height: 200px !important;
+    }
+}

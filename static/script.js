@@ -1,46 +1,182 @@
 // STDAMS Dashboard Frontend Logic
-// Fetches telemetry and alerts, updates UI and charts in real time
+// Enhanced for smooth, animated, real-time Chart.js charts with gradients, tension, tooltips, and gauge
 
 let telemetryHistory = [];
 let threatCounts = { 'Low Risk': 0, 'Medium Risk': 0, 'High Risk': 0 };
+let riskScore = 0;
 
+// Chart.js context
 const telemetryChartCtx = document.getElementById('telemetryChart').getContext('2d');
 const threatPieCtx = document.getElementById('threatPie').getContext('2d');
+const riskGaugeCtx = document.getElementById('riskGauge').getContext('2d');
 
+// Gradient helpers
+function createLineGradient(ctx, color1, color2) {
+    const gradient = ctx.createLinearGradient(0, 0, 0, 320);
+    gradient.addColorStop(0, color1);
+    gradient.addColorStop(1, color2);
+    return gradient;
+}
+
+// Telemetry Line Chart
 const telemetryChart = new Chart(telemetryChartCtx, {
     type: 'line',
     data: {
         labels: [],
         datasets: [
-            { label: 'Temperature (°C)', data: [], borderColor: '#00ffe7', fill: false },
-            { label: 'Battery (%)', data: [], borderColor: '#00ff99', fill: false },
-            { label: 'Signal (%)', data: [], borderColor: '#ffe600', fill: false },
-            { label: 'CPU (%)', data: [], borderColor: '#ff3c00', fill: false }
+            {
+                label: 'Temperature (°C)',
+                data: [],
+                borderColor: createLineGradient(telemetryChartCtx, '#00ffe7', '#0055ff'),
+                backgroundColor: 'rgba(0,255,231,0.08)',
+                fill: true,
+                tension: 0.45,
+                pointRadius: 2,
+                borderWidth: 3
+            },
+            {
+                label: 'Battery (%)',
+                data: [],
+                borderColor: createLineGradient(telemetryChartCtx, '#00ff99', '#005533'),
+                backgroundColor: 'rgba(0,255,153,0.08)',
+                fill: true,
+                tension: 0.45,
+                pointRadius: 2,
+                borderWidth: 3
+            },
+            {
+                label: 'Signal (%)',
+                data: [],
+                borderColor: createLineGradient(telemetryChartCtx, '#ffe600', '#ff9900'),
+                backgroundColor: 'rgba(255,230,0,0.08)',
+                fill: true,
+                tension: 0.45,
+                pointRadius: 2,
+                borderWidth: 3
+            },
+            {
+                label: 'CPU (%)',
+                data: [],
+                borderColor: createLineGradient(telemetryChartCtx, '#ff3c00', '#ff0055'),
+                backgroundColor: 'rgba(255,60,0,0.08)',
+                fill: true,
+                tension: 0.45,
+                pointRadius: 2,
+                borderWidth: 3
+            }
         ]
     },
     options: {
         responsive: true,
-        plugins: { legend: { labels: { color: '#e0e0e0' } } },
+        maintainAspectRatio: false,
+        animation: {
+            duration: 900,
+            easing: 'easeInOutCubic'
+        },
+        plugins: {
+            legend: { labels: { color: '#e0e0e0', font: { size: 14 } } },
+            tooltip: {
+                enabled: true,
+                mode: 'index',
+                intersect: false,
+                backgroundColor: '#23272f',
+                titleColor: '#00ffe7',
+                bodyColor: '#e0e0e0',
+                borderColor: '#00ffe7',
+                borderWidth: 1
+            }
+        },
+        interaction: { mode: 'nearest', axis: 'x', intersect: false },
         scales: {
-            x: { ticks: { color: '#e0e0e0' } },
-            y: { ticks: { color: '#e0e0e0' } }
+            x: {
+                ticks: { color: '#e0e0e0' },
+                grid: { color: 'rgba(0,255,231,0.08)' }
+            },
+            y: {
+                ticks: { color: '#e0e0e0' },
+                grid: { color: 'rgba(0,255,231,0.08)' }
+            }
         }
     }
 });
 
+// Threat Pie Chart
 const threatPie = new Chart(threatPieCtx, {
     type: 'pie',
     data: {
         labels: ['Low Risk', 'Medium Risk', 'High Risk'],
         datasets: [{
             data: [0, 0, 0],
-            backgroundColor: ['#00ff99', '#ffe600', '#ff3c00']
+            backgroundColor: [
+                createLineGradient(threatPieCtx, '#00ff99', '#005533'),
+                createLineGradient(threatPieCtx, '#ffe600', '#ff9900'),
+                createLineGradient(threatPieCtx, '#ff3c00', '#ff0055')
+            ],
+            borderWidth: 2,
+            borderColor: '#23272f'
         }]
     },
     options: {
-        plugins: { legend: { labels: { color: '#e0e0e0' } } }
+        responsive: true,
+        plugins: {
+            legend: { labels: { color: '#e0e0e0', font: { size: 14 } } },
+            tooltip: {
+                enabled: true,
+                backgroundColor: '#23272f',
+                titleColor: '#00ffe7',
+                bodyColor: '#e0e0e0',
+                borderColor: '#00ffe7',
+                borderWidth: 1
+            }
+        }
     }
 });
+
+// Risk Gauge Chart (using Chart.js 'doughnut' as gauge)
+let riskGauge;
+function updateRiskGauge(score) {
+    if (!riskGauge) {
+        riskGauge = new Chart(riskGaugeCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Risk', 'Safe'],
+                datasets: [{
+                    data: [score, 100 - score],
+                    backgroundColor: [
+                        createLineGradient(riskGaugeCtx, '#ff3c00', '#ffe600'),
+                        '#23272f'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                rotation: -90,
+                circumference: 180,
+                cutout: '70%',
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        enabled: true,
+                        backgroundColor: '#23272f',
+                        titleColor: '#00ffe7',
+                        bodyColor: '#e0e0e0',
+                        borderColor: '#00ffe7',
+                        borderWidth: 1
+                    },
+                    title: {
+                        display: true,
+                        text: 'Risk Score',
+                        color: '#00ffe7',
+                        font: { size: 16 }
+                    }
+                }
+            }
+        });
+    } else {
+        riskGauge.data.datasets[0].data = [score, 100 - score];
+        riskGauge.update();
+    }
+}
 
 function updateTelemetryUI(data) {
     document.getElementById('temp').textContent = data.temperature;
@@ -54,10 +190,12 @@ function updateRiskIndicator(alert) {
     if (!alert) {
         indicator.textContent = 'Low';
         indicator.className = 'risk-low';
+        updateRiskGauge(10);
         return;
     }
     indicator.textContent = alert.risk;
     indicator.className = alert.risk === 'High Risk' ? 'risk-high' : alert.risk === 'Medium Risk' ? 'risk-medium' : 'risk-low';
+    updateRiskGauge(alert.risk_score || 10);
 }
 
 function updateAlertsUI(alerts) {
@@ -78,10 +216,10 @@ function updateCharts() {
     telemetryChart.data.datasets[1].data = telemetryHistory.map(d => d.battery);
     telemetryChart.data.datasets[2].data = telemetryHistory.map(d => d.signal);
     telemetryChart.data.datasets[3].data = telemetryHistory.map(d => d.cpu);
-    telemetryChart.update();
+    telemetryChart.update('active');
 
     threatPie.data.datasets[0].data = [threatCounts['Low Risk'], threatCounts['Medium Risk'], threatCounts['High Risk']];
-    threatPie.update();
+    threatPie.update('active');
 }
 
 async function fetchTelemetry() {
@@ -107,5 +245,5 @@ async function fetchAlerts() {
     updateCharts();
 }
 
-setInterval(fetchTelemetry, 1000);
-setInterval(fetchAlerts, 2000);
+setInterval(fetchTelemetry, 2000);
+setInterval(fetchAlerts, 3000);
